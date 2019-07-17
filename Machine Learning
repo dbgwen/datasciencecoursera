@@ -1,0 +1,142 @@
+## Machine Learning
+
+Who uses machine learning? Local gov, Google, Amazon, Insurance companies, universities 
+
+  Study Design: training vs test sets
+  Conceptual issues: out of sample erros, ROC curves
+
+ML Process 
+    Research question -> Input Data -> Features -> algorithm -> parameters -> evaluation 
+    
+    The combo of some data and an aching desire for an answer does not ensure a reasonable answer can be extracted (Research Question) 
+    
+    Garbage In = Garbage Out (Input Data)
+      The quality of data put into the model will be the quality of prediction provided
+      Depends on what is considered a good prediction
+      More data > better models
+      Collect the right data for the questionyou are trying to answer
+    
+    The features of the data are important
+      Automate with care when looking at the features of the data
+      
+     Algorithms are not as important as the quality of data
+     
+     The best ML Method
+        Interpretable - decision tress can be easier to understand in a clinical setting; purpose of algorithm
+        Simple
+        Accurate
+        Fast
+        Scalable - can the algorithm be easilyimplemented? Need it to be scalable
+        
+      
+      In Sample and Out of Sample Errors
+      
+      In Sample Errors (Resubstitution): the error rate you get on the same data set you used to build your predictor
+      Out of Sample Errors (generalization error): the error rate you get on a new data set 
+          
+          Key ideas
+              Out of Sample errors are what you care about
+              In Sample Errors < Out of Sample Errors
+              The reason is overfitting - matching your algorithm to the data you have
+              
+       Prediction Study Design
+            Define Erro Rate
+            Split Data into - training, teasting, validation
+            Trainig set - pick features and prediction function that are most important (use cross-validation)
+            If no validation - apply to test set 1x
+            If Validation set - apply test set and refine, apply 1x to validation set
+            
+            There is one data set (validation) that is held out and is applied once
+            Know your becnhmarks 
+            Avoid small sample sizes - test sets should be large
+            
+          Rules of Thumb for Prediciton Study Design
+            1. Sample Size
+                Large Sample Size
+                    60% training 
+                    20% test 
+                    20% validation 
+                 Medium Sample Size
+                    60% training
+                    40% test
+                 Small sample size
+                     Do cross-validation
+                     Report caveat for small sample size
+             2. Principles
+                 Set the test/validation set aside and don't look at it
+                 Randomly sample training and test sets
+                 You data sets must reflect structure of the problem - if predicitons evolve with time split train/test in time chunks
+                 All subsets should reflect as much diversity as possible - random assignment, balance features
+           
+           Types of Errors
+            Sensitivity/Specificity/PPV/NPV - Binary Outcomes
+                Positive = identified, Negative = rejects
+                True Postivie = correctly identified
+                False Positive = incorrectly identified
+                True Negative = correctly rejected
+                False Negative = incorrectly rejected
+           
+              Mean Squared Error - Continuous Outcomes
+                  MSE = average of square((prediction - truth))
+                  Root MSE = sqrt(MSE)
+                
+              Common Error Measures
+                  MSE or Root MSE - continuous data, sensitivie to outliers
+                  Median absolut deviation - continuous data, more robust (median of distance between observed and truth)
+                  Sensitivity - if you care about missing positives
+                  Specificity - if you care about missing negatives
+                  Accuracy - weighs FP and FN equal
+                  Concordance - Kappa
+                
+               ROC Curves - measures the quality of the goodness of fit
+                  In binary classification you are predicting one of two categories
+                  Probability of an outcome
+                  The cutoff you choose gives different results
+                  The area under the curve (AUC)
+                      0.50 = 50/50 chance, not better than guessing
+                      < 0.50 = worse than guessing
+                      1.00 = prefect classifier
+                      > 0.80 = Good
+                      
+               Cross Validation
+                  Take a dataset and break up into training and test dataset
+                  Accuracy on training set is optimistic and may not be accurate to a new sample
+                  Indepdent data set is better at testing the accuracy
+                  Build model using training set and use test set only once
+                 Approach
+                    Use training set -> split into training/test set -> build a model on training set -> evaluate with test set -> repeat and average the estimated errors
+                    Good for picking: 
+                        Variables to include in model
+                        Type of prediction function to use
+                        Parameters in prediciton function
+                        Compare different predictors
+                      Original test set is never used since the training set is being split into two sets
+                   Can also use K-fold to break up training data set into three different series of datasets - average errors across datasets
+                   Leave one out - leave out a sample of the training data, and then use the training data results to assess out of sample accuracy rate
+                   
+                   Considerations
+                      For time-series data you must do time chunks at the time
+                      K-Fold validation - larger k = less bias, more variance / small k = more bias, less variance
+                      Random sampling must be done without replacement
+                      Random sampling with replacement should use boostrapping
+                          underestimate error and can be corrected, but its complicated (.632 bootstrap)
+                       If you cross-validate to pick predictors, must estimate errors on independent dataset 
+                       
+                    What dataset should you use?
+                       Data properties is important - the features of the data are important
+                       Unrelated data is a common mistake - data that is not related to the outcome 
+                      
+                  
+                 
+               
+                
+        
+        
+        
+        
+        
+        
+        
+              
+              
+              

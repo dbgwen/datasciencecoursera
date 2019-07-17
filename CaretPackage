@@ -1,0 +1,95 @@
+Caret in RStudio
+
+  preProcessing to clean data
+  Data splitting
+      createDataPartition
+      createResample
+      createTimeSlices
+   Training/Testing Functions
+      train
+      predict
+   Model Comparisons
+      confusionMatrix
+      
+   RStduio has built in ML algorithms
+      Linear discirmnant analysis
+      Regression
+      Naive Bayes
+      Support Vector Machines
+      Classification/Regression Trees
+      Random forests
+      Boosting
+      
+    Example
+        library(caret)
+        library(kernlab)
+        data(dataset)
+        inTrain <- createDataPartition(y=dataset$var, p=0.75, list=FALSE)
+        training <- dataset[inTrain, ]
+        testing <- dataset[-inTrain, ]
+        dim(training)
+        set.seed(32343)
+        modelFit <- train(y ~ ., data=training, method="glm")
+        modelFit
+        modelFit$finalModel
+        predictions <- predict(modelFit, newdata=testing)
+        predictions
+        confusionMatrix(predictions, testing$var)
+        
+     Data Slicing
+        Building and testing training data set, cross-validation
+                library(caret)
+        library(kernlab)
+        data(dataset)
+        inTrain <- createDataPartition(y=dataset$var, p=0.75, list=FALSE)
+        training <- dataset[inTrain, ]
+        testing <- dataset[-inTrain, ]
+        dim(training)
+        set.seed(32343)
+        folds <- createFolds(y=dataset$var, k=10, list=TRUE, returnTrain=TRUE)
+        sapply(folds, length)
+        tme <- 1:1000
+        folds <- createTimeSlices(y=tme, initialWindow=20, horizon=10)
+        names(folds)
+        
+    Training in Caret Package
+        library(caret)
+        library(kernlab)
+        data(dataset)
+        inTrain <- createDataPartition(y=dataset$var, p=0.75, list=FALSE)
+        training <- dataset[inTrain, ]
+        testing <- dataset[-inTrain, ]
+        function (x,y, method="rf", preProcess = NULL, metric = ifelse(is.factor(y), "Accuracy", "RMSE")
+        Continuous outcomes: RMSE, RSquared (linear agreement between variables you are predicting and using to predict)
+        Categorical outcomes: Accuracy, Kappa (concordance)
+        args(trainControl) - provides arguments for trainControl
+        
+    Plotting Predictors
+        library(ISLR)
+        library(ggplot2)
+        library(caret)
+        data(Wage)
+        summary(Wage)
+        featurePLot(x=training[,c("age", "education", "jobclass")], y=training$Wage, plot="pairs")
+        qplot(age, wage, data=training)
+        cutWage <- cut2(training$wage, g=3)
+        table(cutWage)
+        Boxplots overlayed with points
+        
+     Preprocessing
+        skewed data can be hard to model with, a variable with a high variance
+        Standardize variables: value - mean /sd
+        mean = 0, variance = 1
+        preProcessing function in Caret Package standardizes the variables
+        
+        
+        
+        
+        
+     
+     
+     
+     
+    
+   
+      

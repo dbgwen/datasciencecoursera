@@ -1,0 +1,38 @@
+Prediction Trees
+    Iteratively split variables into groups
+    Evaluate "homogeneity" within each group
+    Split again if necessary
+    Pros
+      Easy to interpret
+      Better performance in nonlinear settings
+    Cons
+      Without pruning/crossvalidation can lead to overfitting
+      Harder to estimate uncertainty
+      Results may be variable
+      
+   Basic Algorithm
+      1. Start with all variables in one group
+      2. Find the variable/split that best separates the outcomes
+      3. Divide the data into two groups ("leaves") on that split ("node")
+      4. Within each split, find the best variable/split that separates the outcomes
+      5. Continue until the groups are too small or sufficiently "pure"
+      
+   Create Training/Testing Datasets
+    inTrain <‐ createDataPartition(y=iris$Species,
+                                    p=0.7, list=FALSE)
+    training <‐ iris[inTrain,]
+    testing <‐ iris[‐inTrain,]
+    dim(training); dim(testing)
+    qplot(Petal.Width,Sepal.Width,colour=Species,data=training)
+    library(caret)
+    modFit <‐ train(Species ~ .,method="rpart",data=training)
+    print(modFit$finalModel)
+  
+  Plot Tree
+    plot(modFit$finalModel, uniform=TRUE,
+                  main="Classification Tree")
+    text(modFit$finalModel, use.n=TRUE, all=TRUE, cex=.8)
+    library(rattle)
+    fancyRpartPlot(modFit$finalModel)
+    
+    predict(modFit,newdata=testing)
